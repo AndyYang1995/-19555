@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>dash video</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="./dash.js"></script> 
+		<style>
+			video {
+					width: 800px; /
+					height: auto; 
+			}
+		</style>
+
+		<script>
+			var player;
+			function init(mpdUrl) {
+					var video, url = mpdUrl;
+
+					player = dashjs.MediaPlayer().create();
+					video = document.querySelector("video");
+					player.initialize(); 
+					player.setAutoPlay(false); 
+					player.attachView(video); 
+					player.attachSource(url); 
+
+			}
+
+			function change(mpdUrl,index) {
+        if(index == 1){
+          document.getElementById('indexText').style.display = 'block';
+          document.getElementById('video').style.display = 'none';
+          player.reset(); 
+        }else{
+          document.getElementById('indexText').style.display = 'none'; 
+          document.getElementById('video').style.display = 'block'; 
+          player.reset();
+				  init(mpdUrl);
+        }
+			}
+
+		</script>
+	</head>
+	<body>
+		<div>
+      <div>
+        <button onclick="change('',1)">首頁</button> 
+				<button onclick="change('http://180.218.7.38/1.mpd',2)">動漫影片1</button>
+				<button onclick="change('http://180.218.7.38/2.mpd',2)">動漫影片2</button>
+				<button onclick="change('http://180.218.7.38/15.mpd',2)">騎在銀龍的背上</button>
+				<button onclick="change('http://180.218.7.38/11.mpd',2)">偽善者</button>
+				<button onclick="change('http://180.218.7.38/10.mpd',2)">摩登愛情</button>
+				<button onclick="change('http://180.218.7.38/6.mpd',2)">小影片</button>
+				<button onclick="change('http://180.218.7.38/12.mpd',2)">火燒的寂寞</button>
+				<button onclick="change('http://180.218.7.38/14.mpd',2)">請別走</button>
+				<button onclick="change('https://s3.amazonaws.com/_bc_dml/example-content/sintel_dash/sintel_vod.mpd',2)">小電影</button>
+			</div>
+      <div style="margin:20px 20px 20px 20px">
+        <p id="indexText" style="font-size:64px;color:rgb(38, 50, 209);margin:100px 100px 100px 100px">DASH Video 播放器</p>
+        <video id="video" controls hidden></video>
+      </div>
+      
+			
+			<script>
+				document.addEventListener('DOMContentLoaded', function () { 
+						init("./Manifest.mpd"); 
+				});
+			</script>
+		</div>
+	</body>
+</html>
